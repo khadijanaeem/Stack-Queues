@@ -1,0 +1,112 @@
+#include<iostream>
+using namespace std;
+
+template<class T>
+class Stack{
+    class Node{
+        public:
+T data;
+Node* link;
+
+public:
+
+Node(){
+    link=NULL;
+}
+Node(T d){
+    data=d;
+    link=NULL;
+}
+};
+
+public:
+Node* topp;
+int s;
+
+Stack(){
+topp=NULL;
+ s=0;
+}
+void Push(T d){
+Node* newnode=new Node;
+if(newnode==NULL){
+    cout<<"Stack Overflow"<<endl;
+    exit(1);
+}
+
+ newnode->data=d;
+  newnode->link=NULL;
+newnode->link=topp;
+topp=newnode;      //opdate top ptr 
+s++;
+}
+bool IsEmpty(){
+    if( topp==NULL){
+        return 1;
+    }else {
+        return 0;
+    }
+}
+void Pop(){
+    if(IsEmpty()){
+        cout<<"Stack Underflow "<<endl;
+exit(1) ;
+    }
+    Node* temp;
+    temp=topp;
+    topp=topp->link;
+delete temp;
+
+}
+
+T Top(){
+    if(IsEmpty()){
+        cout<<"Stack Underflow "<<endl;
+exit(1) ;
+    }
+   
+return topp->data;
+
+}
+int size(){
+    return s;
+}
+void display(){
+    Node* temp=topp;
+    while(temp!=NULL){
+        cout<<temp->data<<"  ";
+        temp=temp->link;
+    if(temp!=NULL){
+        cout<<"->";
+    }}
+}
+};
+
+void reverseString(string& s){
+    Stack<char> str;
+int n=s.length();
+for(int i=0;i<n;i++){
+str.Push(s[i]);
+    cout<<str.Top()<<" "<<endl;
+}
+for(int i=0;i<n;i++){
+s[i]=str.Top();
+str.Pop();
+}
+
+}
+int main(){
+    string s;
+    cout<<"Enter the string "<<endl;
+    cin>>s;
+        cout<<s<<" "<<endl;
+    reverseString(s); 
+    cout<<s<<" "<<endl;
+//     Stack<int> s;
+//     s.Push(54);    s.Push(51);    s.Push(15);    s.Push(5);
+//     s.display();
+//    int d= s.Top();
+//    cout<<d<<endl;
+//    s.Pop();
+//     s.display();
+}

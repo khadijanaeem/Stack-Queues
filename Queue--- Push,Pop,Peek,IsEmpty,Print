@@ -1,0 +1,101 @@
+#include <iostream>
+using namespace std;
+int n = 6;
+class Queue
+{
+    int *arr;
+    int front;
+    int back;
+    int size;
+
+public:
+    Queue()
+    {
+        arr = new int[n];
+        front = back = -1;
+        size = 0;
+    }
+    void push(int num)
+    {
+        if (back != n - 1)
+        {
+            back++;
+            arr[back] = num;
+            size++;
+        }
+        else
+        {
+            cout << "Queue full" << endl;
+            return;
+        }
+        if (front == -1)
+        {
+            front++;
+        }
+    }
+    void pop()
+    {
+        if (front == -1 || front > back)
+        {
+            cout << "Queue Empty" << endl;
+            return;
+        }
+        front++;
+    }
+    int peek()
+    {
+        if (front != -1 && front < back)
+        {
+            return arr[front];
+        }
+        else
+        {
+            return -1;
+        }
+    }
+    bool IsEmpty()
+    {
+        if (front == -1 || front > back)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    void print()
+    {
+        for (int i = front; i < back; i++)
+        {
+            cout << arr[i] << " ";
+        }
+    }
+};
+int main()
+{
+    Queue a;
+    a.push(3);
+    a.push(2);
+    a.push(5);
+    a.push(8);
+    a.push(1);
+    a.push(29);
+    a.print();
+    cout << endl;
+    cout << "After poping the first element " << endl;
+    a.pop();
+    a.print();
+    cout << endl;
+    int top = a.peek();
+    cout << "Top element is " << top << " " << endl;
+    bool x = a.IsEmpty();
+    if (x)
+    {
+        cout << "The Queue is Empty" << endl;
+    }
+    else
+    {
+        cout << "The Queue is not Empty" << endl;
+    }
+}

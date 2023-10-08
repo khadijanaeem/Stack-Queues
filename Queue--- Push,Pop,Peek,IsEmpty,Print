@@ -13,7 +13,7 @@ public:
     {
         arr = new int[n];
         front = back = -1;
-        size = 0;
+        size = -1;
     }
     void push(int num)
     {
@@ -32,6 +32,10 @@ public:
         {
             front++;
         }
+    }
+    int sizeofQueue()
+    {
+        return size;
     }
     void pop()
     {
@@ -83,6 +87,7 @@ int main()
     a.push(29);
     a.print();
     cout << endl;
+    cout << "Size is " << a.sizeofQueue() << endl;
     cout << "After poping the first element " << endl;
     a.pop();
     a.print();

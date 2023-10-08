@@ -13,7 +13,7 @@ public:
     {
         arr = new int[n];
         front = back = -1;
-        size = -1;
+        size = 0;
     }
     void push(int num)
     {
@@ -45,6 +45,7 @@ public:
             return;
         }
         front++;
+        size--;
     }
     int peek()
     {
@@ -70,7 +71,7 @@ public:
     }
     void print()
     {
-        for (int i = front; i < back; i++)
+        for (int i = front; i <= back; i++)
         {
             cout << arr[i] << " ";
         }

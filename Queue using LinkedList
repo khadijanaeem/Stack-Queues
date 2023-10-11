@@ -1,0 +1,104 @@
+/*Implement a template-based queue using Linked List. The required member methods are:
+a) void enqueue(): Adds an element to queue
+b) void dequeue(): Removes an element from queue
+c) bool isFull(): return true if queue is full else false.
+d) int size(): returns the count of total element stored in the stack.
+e) bool isEmpty(): returns true if the stack is empty else false.
+f) int front(): returns the element on Front of queue
+g) int rear(): return the element on Rear of queue*/
+
+#include<iostream>
+using namespace std;
+int m=100;
+template<class T>
+class Queue{
+    class Node{
+    public:
+    T data;
+    Node* link;
+    Node(){
+        link=NULL;
+    }
+     Node(T d){
+        data=d;
+        link=NULL;
+    }
+    };
+public:
+Node* front;
+Node* rear;
+int n;     //size
+
+Queue(){
+    front =rear=NULL;
+}
+bool IsEmpty(){
+    return n==0;
+    //return bottom==NULL
+}
+bool IsFull(){
+    //max size
+    return n==m;
+}
+int size(){
+    return n;
+}
+T frontelement(){
+return front->data;
+}
+
+T rearelement(){
+    return rear->data;
+}
+void enqueue(T d){
+if(!IsFull()){
+    Node* temp=new Node(d);
+    if(front==NULL){
+front=rear=temp ;
+return;
+    }
+    front->link=temp;
+    front=temp;
+}
+else{
+    cout<<"Stack overflow"<<endl;
+    return;
+}
+}
+void dequeue(){
+    if(rear==NULL){
+        return ;
+    }
+    Node* temp=rear;
+    rear=rear->link;
+    if(rear==NULL){
+        front=NULL;
+    }
+    delete temp;
+}
+void print(){
+    Node* temp=rear;
+    while(temp!=NULL){
+cout<<temp->data<<" ";
+temp=temp->link;
+    }
+    cout<<endl;
+}
+
+};
+int main(){
+Queue<int> q;
+for(int i=0;i<5;i++){
+q.enqueue(i);
+}
+q.print();
+if(q.IsEmpty())
+cout<<"queue empty"<<endl;
+if(q.IsFull())
+cout<<"queue full"<<endl;
+cout<<"remove first element "<<endl;
+q.dequeue();
+q.print();
+cout<<"Element at the bottom of queueu is :"<<endl;
+cout<<q.rearelement();
+}

@@ -2,8 +2,8 @@
 following operation:
 isPalindrome(): Check if the elements in the circular queue form a palindrome. A palindrome is a
 sequence that reads the same forwards as backward. You should ignore the wrap-around when
-checking for palindromes. For example, if the queue contains [1, 2, 3, 4, 5], it is considered a
-palindrome because [1, 2, 3, 4, 5] reads the same backward.*/
+checking for palindromes. For example, if the queue contains [1, 2, 3, 2, 1], it is considered a
+palindrome because [1, 2, 3, 2, 1] reads the same backward.*/
 
 #include <iostream>
 #include <stack>

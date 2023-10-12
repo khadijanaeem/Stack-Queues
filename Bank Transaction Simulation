@@ -1,0 +1,99 @@
+/*
+You are tasked with simulating a simple bank transaction system using stacks and queues. The bank has
+several teller windows, and customers can perform various transactions, including withdrawals, deposits,
+and checking balances. Your task is to implement this system.
+Create a C++ program to simulate the bank transactions. Here are the details:
+Requirements:
+1. Use a queue to represent the line of customers waiting to be served at the bank. Each customer is
+represented by a dictionary with the following properties:
+ customer_id: A unique identifier for each customer.
+ transaction_type: One of the following:withdrawal,deposit,check_balance.;
+ amount: The amount involved in the transaction (for withdrawals and deposits).
+ balance: The current account balance for checking balance transactions.
+2. Use a stack to represent each teller&#39;s transaction history. Each teller can handle one customer at a
+time, and the stack should keep track of the customer's transaction history.
+Operations:
+ A customer arrives at the bank and joins the queue.
+ When a teller is available, they pop the next customer from the queue and serve them.
+ The teller performs the requested transaction, updates the customer's balance, and pushes the
+customer's data onto the telle's stack.
+ If a customer requests a ;check_balance; transaction, the teller provides the balance without
+modifying it.
+ After the transaction is complete, the customer leaves the bank.
+Your Program:
+Implement the following functions:
+1. enqueue_customer(queue, customer_data): Add a customer to the queue.
+2. teller_serve_customer(queue, teller_stack): Serve the next customer in the queue. Perform the
+transaction and update the customeR's data.
+3. check_balance(queue, teller_stack, customer_data): Check the customer's account balance
+without modifying it.
+4. get_transaction_history(teller_stack): Retrieve the transaction history for a teller's current
+customer.*/
+
+#include<iostream>
+#include<queue>
+#include<stack>
+using namespace std;
+
+class Customer{
+public:
+int customer_id;
+string transaction_type;
+int amount;
+int balance;
+};
+void EnqeueCustomerData(queue<Customer>& q, const Customer& data){
+q.push(data);
+}
+void teller_serve_customer(queue<Customer>& q, stack<Customer>& teller_stack){
+    if(!q.empty()){
+        Customer customer=q.front();
+        q.pop();
+//updates the customer's balance
+        if(customer.transaction_type=="withdrawal"){
+            customer.balance-=customer.amount;
+        }
+        else if(customer.transaction_type=="deposit"){
+            customer.balance+=customer.amount;
+        }
+teller_stack.push(customer);
+    }
+}
+  void customerData( Customer customer_data){
+    cout<<"Customer having id "<<customer_data.customer_id<<" has balance "<<customer_data.balance<<endl;
+}
+void get_transaction_history(stack<Customer>& teller_stack){
+stack<Customer>& temp=teller_stack;
+while(!temp.empty()){
+    Customer c= temp.top();
+    if(c.transaction_type == "withdrawal " || c.transaction_type =="withdrawal"){
+            cout<<"Customer have"<<c.amount<<endl;
+    }
+    temp.pop();
+}
+}
+int main(){
+queue<Customer> c;
+stack<Customer> teller;
+
+    Customer customer1 = {1, "withdrawal", 100, 10};
+    Customer customer2 = {2, "deposit", 200, 880};
+    Customer customer3 = {3, "check_balance", 0, 500};
+
+    EnqeueCustomerData(c, customer1);
+    EnqeueCustomerData(c, customer2);
+    EnqeueCustomerData(c, customer3);
+
+    teller_serve_customer(c, teller);
+    teller_serve_customer(c, teller);
+    teller_serve_customer(c, teller);
+
+    customerData( customer3);
+    get_transaction_history(teller);
+    customerData( customer2);
+    get_transaction_history(teller);
+    customerData( customer1);
+    get_transaction_history(teller);
+
+    return 0;
+}

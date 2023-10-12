@@ -1,0 +1,164 @@
+/*Implement a circular queue data structure in C++. The circular queue should support the
+following operation:
+isPalindrome(): Check if the elements in the circular queue form a palindrome. A palindrome is a
+sequence that reads the same forwards as backward. You should ignore the wrap-around when
+checking for palindromes. For example, if the queue contains [1, 2, 3, 4, 5], it is considered a
+palindrome because [1, 2, 3, 4, 5] reads the same backward.*/
+
+#include <iostream>
+#include <stack>
+using namespace std;
+int m = 100;
+class CircularQueue
+{
+    class Node
+    {
+    public:
+        int data;
+        Node *link;
+        Node()
+        {
+            link = NULL;
+        }
+        Node(int d)
+        {
+            data = d;
+            link = NULL;
+        }
+    };
+
+public:
+    Node *front;
+    Node *rear;
+    int n; // size
+
+    CircularQueue()
+    {
+        n = 0;
+        front = rear = NULL;
+    }
+    bool IsEmpty()
+    {
+        return n == 0;
+    }
+    bool IsFull()
+    {
+        // max size
+        return n == m;
+    }
+    int size()
+    {
+        return n;
+    }
+    int frontelement()
+    {
+        return front->data;
+    }
+    int rearelement()
+    {
+        return rear->data;
+    }
+    void enqueue(int d)
+    {
+        if (!IsFull())
+        {
+            n++;
+            Node *temp = new Node(d);
+            if (front == NULL)
+            {
+                front = rear = temp;
+                return;
+            }
+            front->link = temp;
+            front = temp;
+        }
+        else
+        {
+            cout << "Stack overflow" << endl;
+            return;
+        }
+    }
+
+    int dequeue()
+    {
+        Node *temp = rear;
+        rear = rear->link;
+        n--;
+        int s = temp->data;
+        delete temp;
+        return s;
+    }
+
+    void print()
+    {
+        Node *temp = rear; // from the bottom of queue
+        while (temp != NULL)
+        {
+            cout << temp->data << " ";
+            temp = temp->link;
+        }
+        cout << endl;
+    }
+
+    void pop()
+    {
+        Node *temp = front;
+        front = front->link;
+        n--;
+        delete temp;
+    }
+    bool IsPalindrome(CircularQueue q)
+    {
+        int num = q.size();
+        bool found = true;
+        stack<int> temp1;
+        // Node *temp = q.rear;
+        while (num > 0)
+        {
+            int n = q.dequeue();
+            temp1.push(n);
+            q.enqueue(n);
+            num--;
+        }
+        num = q.size();
+        while (num > 0)
+        {
+            int n = q.dequeue();
+            int n2 = temp1.top();
+            if (n != n2)
+            {
+                cout << "Not a palindrome" << endl;
+                found = false;
+                return found;
+            }
+            q.enqueue(n);
+            temp1.pop();
+            num--;
+        }
+        return found;
+    }
+};
+
+int main()
+{
+    CircularQueue q;
+    q.enqueue(1);
+    q.enqueue(2);
+    q.enqueue(3);
+    q.enqueue(1);
+    q.print();
+    if (q.IsPalindrome(q))
+    {
+        cout << "Palindrome" << endl;
+    }
+    CircularQueue q2;
+    q2.enqueue(1);
+    q2.enqueue(2);
+    q2.enqueue(2);
+    q2.enqueue(1);
+    q2.print();
+    if (q2.IsPalindrome(q2))
+    {
+        cout << "Palindrome" << endl;
+    }
+}
